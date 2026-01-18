@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Supposedly this works
+# Supposedly this works. But earlier Google AI Mode said it won't work without yubikey manager because it doesn't have a clock in it. ???
+#
 # AWS does not support HMAC-based One-Time Password (HOTP) for standard IAM multi-factor authentication (MFA); it requires Time-based One-Time Password (TOTP). 
 # However, your script still works because of how YubiKeys can be configured to act as a Virtual MFA device:
 # Virtual MFA Simulation: When you set up MFA in the AWS Console, you typically choose "Authenticator app". Instead of scanning the QR code with a phone, you copy the Secret Key (the seed).
