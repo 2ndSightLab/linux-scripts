@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Yes you can make this work but I don't wnat to install software on my device to do it.
+# https://scalesec.com/blog/why-your-yubikey-wont-work-with-aws-cli/#:~:text=The%20answer:%20Only%20one%20two,so%20long%20as%20it's%20HOTP
+#
 # Standard AWS MFA uses TOTP (Time-based OTP), which requires knowing the current time. Since the YubiKey does not have an internal clock or battery, it cannot "type" a TOTP code on its own; it needs a computer app (like Yubico Authenticator) to provide the time. 
 # OATH-HOTP is "event-based" rather than "time-based". It generates a new code every time you touch the button by incrementing a counter stored on the key. Because it doesn't need the time, the YubiKey can act as a standalone USB keyboard and "type" the code directly into your terminal. 
 # How to set it up for 2026
