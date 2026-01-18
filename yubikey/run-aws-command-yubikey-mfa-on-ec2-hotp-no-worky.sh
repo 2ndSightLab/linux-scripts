@@ -18,7 +18,7 @@
 # Instead of scanning the QR code, click "Show secret key".
 # Note: For this to work, you must ensure the secret key you programmed into your YubiKey matches the one provided by AWS. 
 #
-#When using a YubiKey for HOTP (HMAC-based One-Time Password), a new code is generated immediately upon a physical event, such as a touch. It does not have a time-based delay or expiration. 
+# When using a YubiKey for HOTP (HMAC-based One-Time Password), a new code is generated immediately upon a physical event, such as a touch. It does not have a time-based delay or expiration. 
 #
 # Key Characteristics of YubiKey HOTP:
 #
@@ -41,12 +41,14 @@
 # The Problem: Because the YubiKey has no internal clock, it cannot generate TOTP codes "by itself" to type into a terminal. It requires a host app (like Yubico Authenticator) to provide the time. 
 #
 # The Clock Problem (Hardware vs. App)
-#Dedicated Hardware Tokens: These devices have a built-in battery and internal clock. Because they know the current time independently, they can constantly generate the Time-based One-Time Passwords (TOTP) that AWS requires.
-#YubiKey: A YubiKey has no battery and no internal clock. It is "clock-blind." To generate a TOTP code (the only type AWS accepts for 6-digit MFA), the YubiKey must receive the current time from an external piece of software, such as the Yubico Authenticator or a CLI tool like ykman. 
-#2. Protocol Mismatch (HOTP vs. TOTP)
-#Your Script: This uses HOTP (event-based), which is the only 6-digit mode a YubiKey can "type" on its own without software. It uses a counter (1, 2, 3...) instead of a clock.
-#AWS Requirement: AWS IAM strictly requires TOTP (time-based) for its 6-digit MFA codes.
-#The Result: Even if you program an HOTP secret into your YubiKey and it "types" into your script, AWS will reject the code because it expects a time-synced value, not a counter-synced value.
+# Dedicated Hardware Tokens: These devices have a built-in battery and internal clock. Because they know the current time independently, they can constantly generate the Time-based One-Time Passwords (TOTP) that AWS requires.
+# YubiKey: A YubiKey has no battery and no internal clock. It is "clock-blind." To generate a TOTP code (the only type AWS accepts for 6-digit MFA), the YubiKey must receive the current time from an external piece of software, such as the Yubico Authenticator or a CLI tool like ykman. 
+# 2. Protocol Mismatch (HOTP vs. TOTP)
+# Your Script: This uses HOTP (event-based), which is the only 6-digit mode a YubiKey can "type" on its own without software. It uses a counter (1, 2, 3...) instead of a clock.
+# AWS Requirement: AWS IAM strictly requires TOTP (time-based) for its 6-digit MFA codes.
+# The Result: Even if you program an HOTP secret into your YubiKey and it "types" into your script, AWS will reject the code because it expects a time-synced value, not a counter-synced value.
+#
+# Physical Connection Required: ykman (the YubiKey Manager CLI) must have a direct connection to the YubiKey via the local USB bus. It communicates with the hardware to request a code; if the hardware isn't physically attached to the machine running the command, it will return an error that no device is found.
 #
 # How to use it with the script
 # Once configured, you don't need any software running. When the script reaches the read command:
