@@ -35,6 +35,8 @@
 #
 # AWS Compatibility (Inaccurate): AWS IAM and AWS Identity Center strictly require the TOTP (Time-based) algorithm for virtual authenticator devices. If you program a YubiKey with a secret key using OATH-HOTP, the codes generated will quickly fall out of sync with AWS's expected time-based codes, and authentication will fail.
 #
+# AWS strictly does not support OATH-HOTP for MFA. Your script's logic is sound, but the authentication will fail because AWS requires TOTP (time-based) for the numeric codes your script expects.
+# 
 # How to use it with the script
 # Once configured, you don't need any software running. When the script reaches the read command:
 # Ensure your cursor is in the terminal.
