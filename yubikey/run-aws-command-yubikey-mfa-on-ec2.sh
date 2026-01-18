@@ -18,6 +18,19 @@
 # Instead of scanning the QR code, click "Show secret key".
 # Note: For this to work, you must ensure the secret key you programmed into your YubiKey matches the one provided by AWS. 
 #
+#When using a YubiKey for HOTP (HMAC-based One-Time Password), a new code is generated immediately upon a physical event, such as a touch. It does not have a time-based delay or expiration. 
+#
+# Key Characteristics of YubiKey HOTP:
+#
+# Immediate Generation: A new code is produced the instant you touch the YubiKey's gold contact (or scan it via NFC).
+# Event-Driven: Unlike TOTP, which rotates codes every 30 seconds, HOTP only changes when you physically "trigger" it.
+# No Time Expiration: The generated code remains valid until it is used for a successful login or until you generate a newer code that the server validates.
+# Slot-Based: You can program HOTP into one of the YubiKey's two "OTP slots":
+# Short Press (1-2.5s): Typically used for Slot 1.
+# Long Press (3-5s): Typically used for Slot 2. 
+# Usage Warning:
+# Because it is event-based, pressing the button multiple times without logging in can cause the YubiKey's internal counter to get ahead of the server's counter. While most servers have a "look-ahead window" to account for this, excessive accidental presses may eventually require a resynchronization process. 
+#
 # How to use it with the script
 # Once configured, you don't need any software running. When the script reaches the read command:
 # Ensure your cursor is in the terminal.
